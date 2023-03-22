@@ -3,14 +3,15 @@ import numpy as np
 from IPython.display import display
 import matplotlib.pyplot as plt
 
+#determines final image size
 plt.figure(figsize=(12,8))
 
 
-
+#read the database
 sample_customer_data = pd.read_excel("./dataset.xlsx")
 sample_customer_data.info()
 
-
+#operations individually
 dropna = sample_customer_data.dropna()#retorna um Dataframe vazio aka não existem linhas com todos os dados.
 dropna_columns = sample_customer_data.dropna(axis=1, how="all") #Remove as colunas que estavam vazias
 dropna_005 = sample_customer_data.dropna(thresh=10) #drops all rows with less than 95% fill
@@ -39,8 +40,6 @@ with pd.ExcelWriter("newdataset.xlsx") as writer:
     dropna_005.to_excel(writer)
 
 print("plotting histogram")
-#sample_customer_data.boxplot(rot=90)
-aux = sample_customer_data.drop(2)
-aux.boxplot(rot=90)
+sample_customer_data.boxplot(rot=90)
 plt.show()
 print("plotted")
