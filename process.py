@@ -16,7 +16,7 @@ dropna = sample_customer_data.dropna()#retorna um Dataframe vazio aka não exist
 dropna_columns = sample_customer_data.dropna(axis=1, how="all") #Remove as colunas que estavam vazias
 dropna_005 = sample_customer_data.dropna(thresh=10) #drops all rows with less than 95% fill
 duplicates = sample_customer_data.duplicated(subset=['Patient ID'])#Cria um dataframe com todas os pacientes com IDS duplicadas, nesse caso nenhum
-
+dropna_columns_010=dropna_005.dropna(axis=1, how="all", thresh=10)
 
 
 
@@ -36,8 +36,13 @@ dropna_005.info()
 print("\n")
 print("info on duplicate patients")
 duplicates.info()
+print("\n")
+print("info after dropping all columns with less than 10 %% filled values from the dropna_005 sheet")
+dropna_columns_010.info()
+
+
 with pd.ExcelWriter("newdataset.xlsx") as writer:
-    dropna_005.to_excel(writer)
+    dropna_columns_010.to_excel(writer)
 
 print("plotting histogram")
 sample_customer_data.boxplot(rot=90)
